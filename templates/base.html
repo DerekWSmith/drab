@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  
+  {% block extrastyle %}{% endblock %}
+  {% block extrahead %}{% endblock %}
+</head>
+<body>
+
+<div id="mainmenu">
+  <div class="menu-left">
+    <div class="brand">dab</div>
+    <a href="#" class="link">Dashboard</a>
+    <a href="#" class="link">Decisions</a>
+    <a href="#" class="link">Activities</a>
+  </div>
+  <div class="menu-right">
+    <span>👤</span>
+    <a href="#" class="link">Profile</a>
+  </div>
+</div>
+
+{% block content %}{% endblock %}
+</body>
+</html>

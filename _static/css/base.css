@@ -1,0 +1,61 @@
+/* Django Admin Common Colors */
+
+:root {
+  --dark-green: #0c4b33;
+  --teal: #007f7f;
+  --light-gray: #f6f6f6;
+  --med-gray: #e8e8e8;
+  --light-teal-hover: #d9f0f0;
+  --lightest-bg: #fafafa;
+  --dark-text: #222222;
+  --error-red: #e03c31;
+  --form-bg: #f5f5f5;
+  --border-gray: #cccccc;
+  --orange-highlight: #f5de65;
+  --dark-blue: #4a7c95;
+  --light-blue: #7fb1ca;
+}
+
+/* Example usage */
+
+#mainmenu {
+  background: var(--dark-blue);
+  color: var(--orange-highlight);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+.menu-left,
+.menu-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.brand {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-right: 20px;
+}
+
+.link {
+  color: var(--orange-highlight);
+  text-decoration: none;
+}
+
+.link:hover {
+  background-color: var(--light-teal-hover);
+}
+.sidebar {
+  background-color: var(--light-gray);
+}
+
+body {
+  background-color: var(--lightest-bg);
+  color: var(--dark-text);
+  font-family: 'Roboto', sans-serif;
+  }

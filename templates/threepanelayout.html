@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block extrahead %}
+    
+        <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Split.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.5/split.min.js"></script>
+    
+    
+    
+{% endblock %}
+  {% block extrastyle %}
+      <style>
+        /* Custom styles for resizable containers */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .container-fluid, .row, .col {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        .sidebar {
+            background-color: var(--light-gray);
+            overflow: auto; /* Allow scrolling if content overflows */
+            min-width: 10vw;
+        }
+
+        .upper-container, .lower-container {
+            background-color: var(--light-gray) ;
+            overflow: auto; /* Allow scrolling if content overflows */
+            flex : 1;
+            
+        }
+
+.gutter {
+  background-color: var(--med-gray);
+  background-clip: content-box;
+}
+
+.gutter.gutter-horizontal {
+  cursor: col-resize;
+  width: 3px;
+}
+
+.gutter.gutter-vertical {
+  cursor: row-resize;
+  height: 3px;
+}
+
+
+
+    </style>
+  {% endblock %}
+
+
+
+{% block content %}
+
+<div id="mainSplit" style="display: flex; height: 100vh;">
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar">{%  block sidebar %} %}Sidebar{%  endblock %}</div>
+
+  <!-- Right split: vertical containers -->
+  <div id="rightContainer" style="flex: 1; display: flex; flex-direction: column;">
+    <div id="upperContainer" class="upper-container">{%  block upper %}Upper{%  endblock %}</div>
+    <div id="lowerContainer" class="lower-container">{%  block lower %}Lower{%  endblock %}</div>
+  </div>
+</div>
+
+    <script>
+Split(['#sidebar', '#rightContainer'], {
+    sizes: [20, 80],
+    minSize: [100, 300],
+    gutterSize: 5,
+    direction: 'horizontal',
+    cursor: 'col-resize',
+    elementStyle: (dimension, size) => ({ flexBasis: `${size}%` }),
+    gutterStyle: () => ({ flexBasis: '5px' }),
+});
+
+Split(['#upperContainer', '#lowerContainer'], {
+    sizes: [50, 50],
+    minSize: [100, 100],
+    gutterSize: 5,
+    direction: 'vertical',
+    cursor: 'row-resize',
+    elementStyle: (dimension, size) => ({ flexBasis: `${size}%` }),
+    gutterStyle: () => ({ flexBasis: '5px' }),
+});
+    </script>
+
+    <!-- Bootstrap JS (Optional, for certain Bootstrap features) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endblock %}

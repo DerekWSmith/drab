@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-o^t(_so!k#+7hltu7#^9_3xg-p*n_sonjifa=l()(k(q(8bcvh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['sonia.local']
+ALLOWED_HOSTS = ['sonia.local','localhost']
 
 
 # Application definition
@@ -135,7 +135,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+
+STATIC_URL = 'https://sonia.local/static/'
 STATIC_ROOT = BASE_DIR / '_static'
 
 # Default primary key field type
@@ -146,7 +147,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTHENTICATION_BACKENDS = ['accounts.CaseInsensitiveEmailBackend.CaseInsensitiveEmailBackend']
 CSRF_TRUSTED_ORIGINS = ['http://sonia.local:8080']
 
-
+# Common
 INTERNAL_TIMESTAMP_FORMAT = '%Y%m%d_%H%M%S'
 UPLOADED_FILES_TIMESTAMP_FORMAT = '%Y%m%d_%H%M%S'  # changing this will stuff up upload filing.
 HUMAN_FRIENDLY_DATE_FORMAT = '%d-%b-%y'  # changing this will stuff up upload filing.
+USER_UPLOADS_ROOT = BASE_DIR / 'protected ' / 'uploadroot'
+# FileField.upload_to must return a relative path (within MEDIA_ROOT), not an absolute path.
+MEDIA_ROOT = USER_UPLOADS_ROOT
+
+SERVER_SIDE_RENDERING = True  # whether views prduce a json data structure, or a fully-rendered HTML
+
+
+# Tasks
+WORK_DAY_HOURS = 8 # the number of hours in a business day of work
+WORK_WEEK_DAYS = 5 # number of days of work per week

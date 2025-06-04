@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -78,6 +80,9 @@ class User(AbstractUser):
     subscription_renewal_date = models.DateField(null=True, blank=True)
     subscription_notes = models.TextField(default='', blank=True, null=True)
 
+    is_out_of_office = models.BooleanField(default=False)
+    out_of_office_until = models.DateTimeField(null=True, blank=True)
+
 
     contact_details = models.TextField(default='', blank=True, null=True)
     preferred_name = models.CharField(max_length=200, default='', blank=True, null=True)
@@ -148,8 +153,22 @@ class User(AbstractUser):
             return self.last_name
         return self.email
 
+    from django.utils import timezone
 
+    def set_out_of_office_on_save(self):
+        now = timezone.now()
+        if self.out_of_office_until:
+            if now < self.out_of_office_until:
+                self.is_out_of_office = True
+            else:
+                self.is_out_of_office = False
+                self.out_of_office_until = None
+        else:
+            self.is_out_of_office = False
 
+    def save(self, *args, **kwargs):
+        self.set_out_of_office_on_save()
+        super().save(*args, **kwargs)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
