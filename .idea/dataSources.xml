@@ -8,7 +8,7 @@
       <jdbc-url>jdbc:sqlite:drrbbv1.sqlite</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="DRRBB" uuid="441d3930-6bf0-46e2-9146-c8d4d5b40fc5">
+    <data-source source="LOCAL" name="Bertha drrbb" uuid="039aa44e-9cb5-45fd-b9fb-92c438854def">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>

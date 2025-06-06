@@ -1,0 +1,36 @@
+
+.card-container {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.card {
+  max-height : 4vh;
+  width: 100% ;
+  background-color: #f9f9f9;
+  /*border: 1px solid #ddd;*/
+  /*border-radius: opx;*/
+  /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
+  transition: transform 0.2s ease;
+  margin-bottom: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom : solid 1px var(--med-gray);
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card-header {
+  background-color: #007bff;
+  color: white;
+  text-align: left;
+}
+
+.card-body {
+  padding: 1px ;
+  text-align: left;
+}

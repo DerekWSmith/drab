@@ -7,13 +7,17 @@ from accounts.models.Group import Group
 class GroupMembership(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+
         on_delete=models.CASCADE,
-        related_name='group_memberships'
+        related_name='group_memberships',
+        db_constraint=False
     )
     group = models.ForeignKey(
         to=Group,
+
         on_delete=models.CASCADE,
-        related_name='memberships'
+        related_name='memberships',
+        db_constraint=False
     )
     start_date = models.DateField(default=timezone.now)
     expiry_date = models.DateField(null=True, blank=True)

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load human_friendly_date %}
+
+
+{% block extrahead %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <h3 style="border: 0;">{{ form.summary }}</h3>
+            <div class="card mb-3" style="height:100vh">
+                <div class="card-header">Dates</div>
+                <div class="card-body">
+
+                    
+<div class="input-group mb-3">
+  <span class="input-group-text" id="createdat">Date Created</span>
+  <input type="text" class="form-control" 
+         value="{{ form.created_at.value | human_friendly_date }}" 
+         aria-label="date created" aria-describedby="createdat" readonly disabled>
+</div>         
+                    
+                    
+                    <div class="col-md-4">
+                        {{ form.referenced_at.label_tag }} {{ form.referenced_at }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.updated_at.label_tag }} {{ form.updated_at }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.publish_from.label_tag }} {{ form.publish_from }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.publish_until.label_tag }} {{ form.publish_until }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.adopted_date.label_tag }} {{ form.adopted_date }}
+                    </div>
+                </div>
+            </div>
+    </div>
+    <button type="submit">Save</button>
+    </form>
+    </div>
+{% endblock %}

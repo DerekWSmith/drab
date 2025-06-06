@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.utils import timezone
 
@@ -25,12 +26,14 @@ class Item(models.Model):
     def active_activities(self):
         return self.activities.filter(is_active=True)
 
-
-
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_created_items')
-    responsible = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_responsible_items', null=True,
-                                    blank=True)
-    next_responsible = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='%(class)s_next_responsible_items', null=True, blank=True)
+    uid = models.UUIDField(default=uuid.uuid4, unique=True)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_created_items',
+        db_constraint=False)
+    responsible = models.ForeignKey(User,  on_delete=models.CASCADE, related_name='%(class)s_responsible_items', null=True,
+                                    blank=True,
+        db_constraint=False)
+    next_responsible = models.ForeignKey(User,  on_delete=models.SET_NULL, related_name='%(class)s_next_responsible_items', null=True, blank=True,
+        db_constraint=False)
 
     admins = models.ManyToManyField(User, related_name='%(class)s_administers_items', blank=True)
     subscribers = models.ManyToManyField(User, related_name='%(class)s_subscribed_items')
@@ -38,7 +41,8 @@ class Item(models.Model):
     publish_from = models.DateTimeField(default=timezone.now)
     publish_until = models.DateTimeField(null=True, blank=True)
 
-    previous = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='%(class)s_superseded_by')
+    previous = models.ForeignKey('self',  null=True, blank=True, on_delete=models.SET_NULL, related_name='%(class)s_superseded_by',
+        db_constraint=False)
 
     activities = models.ManyToManyField('core.Activity', related_name='%(class)s_related_items', blank=True) # activities related to the concrete Brief, Task, Decision.
 
@@ -51,13 +55,16 @@ class Item(models.Model):
 
 
     notes = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    referenced_at = models.DateTimeField(auto_now=True)  # can be overridden by the view, to state when last read
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
+    referenced_at = models.DateTimeField()  # can be overridden by the view, to state when last read
 
 
 
     def save(self, *args, **kwargs):
+        if not self.created_at:
+            self.created_at = timezone.now()
+        self.updated_at = timezone.now()
         if not self.responsible:
             self.responsible = self.creator
         super().save(*args, **kwargs)

@@ -16,14 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
-from django.shortcuts import render
-
-def test_view(request):
-    return render(request, 'test.html')
-
+from core.views.decision import DecisionSelectionList, DecisionEdit
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('test/', test_view, name='test'),
-]
+    path('test/', DecisionSelectionList.as_view(), name='list_decisions'),
+    path('decision/<str:uid>/edit/', DecisionEdit.as_view(), name='edit_decision'),]

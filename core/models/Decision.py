@@ -1,5 +1,5 @@
+import uuid
 from django.db import models
-
 from accounts.models.User import User
 from core.models.Item import Item
 from core.models.Activity import Activity
@@ -42,10 +42,11 @@ class Decision(Item):
         return 'Quorum decision: yay' if len(yays) > len(nays) else 'Quorum decision: nay'
 
     # Fields
+    uid = models.UUIDField(default=uuid.uuid4, unique=True)
+    summary = models.CharField(max_length=255, null=True, blank=True, default='')
     resolution = models.CharField(max_length=255, blank=True)
-    adopted_date = models.DateTimeField(auto_now_add=True, blank=True)
-
-
+    adopted_date = models.DateTimeField(null=True, blank=True)
+    notes = models.TextField(blank=True)
 
     quorum = models.PositiveIntegerField(default=0, blank=True)  # total votes required if no special groups apply.
     majority = models.PositiveIntegerField(default=0, blank=True)  # passing threshold.

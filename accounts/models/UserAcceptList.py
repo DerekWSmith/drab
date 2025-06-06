@@ -7,15 +7,19 @@ Really, just a placeholder at the moment
 class UserAcceptlist(models.Model):
     user = models.ForeignKey(
         'accounts.User',
+
         on_delete=models.DO_NOTHING,
         related_name='accepted_users',
-        db_index=True
+        db_index=True,
+        db_constraint=False
     )
     accepted_user = models.ForeignKey(
         'accounts.User',
+
         on_delete=models.DO_NOTHING,
         related_name='accepted_by_users',
-        db_index=True
+        db_index=True,
+        db_constraint=False
     )
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 

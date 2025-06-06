@@ -1,0 +1,32 @@
+
+.button {
+  /* Basic styling */
+  background: var(--dark-blue);
+  color: var(--orange-highlight);
+  border: none;
+  padding: 4px 8px;
+  font-size: 14px;
+  font-weight: normal;
+  cursor: pointer;
+  outline: black ;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  /* Rounded corners */
+  border-radius: 10px;
+
+  /* Box shadow for depth */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  /* Text shadow for better readability */
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect */
+.button:hover {
+  background-color: var(--med-teal) ;
+}
+
+/* Active state */
+.button:active {
+  transform: scale(0.97); /* Slight shrink effect */
+}

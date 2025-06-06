@@ -1,3 +1,4 @@
+import uuid
 from django.utils import timezone
 
 from django.contrib.auth.base_user import BaseUserManager
@@ -60,18 +61,20 @@ Through tables for accept and block list
 class User(AbstractUser):
 
     objects = CustomUserManager()
-
+    uid = models.UUIDField(default=uuid.uuid4, unique=True)
     username = None
     email = models.EmailField(unique=True)
 
     subscription = models.ForeignKey(
         to='SubscriptionType',
+
         on_delete=models.DO_NOTHING,
         null=True,
         blank=True,
         verbose_name='Subscription type',
         help_text='Default code = default ',
-        related_name='users',  # relate the ForeignKey field with reverse relationships
+        related_name='users',  # relate the ForeignKey field with reverse relationships,
+        db_constraint=False
     )
 
     subscription_active = models.BooleanField(default=True, null=True, blank=True)

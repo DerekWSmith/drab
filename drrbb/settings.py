@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.middleware.LogRequestURL.LogRequestURLMiddleware'
 ]
 # Custom user model
 AUTH_USER_MODEL = 'accounts.User'
@@ -84,7 +85,7 @@ DATABASES = {
     },
 'default': {
     'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'drrbb',
+    'NAME': 'drrbbv1',
     'USER': 'jethrotull',
     'PASSWORD': 'moody.soap.ute',
     'HOST': 'localhost',
@@ -145,18 +146,19 @@ STATIC_ROOT = BASE_DIR / '_static'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTHENTICATION_BACKENDS = ['accounts.CaseInsensitiveEmailBackend.CaseInsensitiveEmailBackend']
-CSRF_TRUSTED_ORIGINS = ['http://sonia.local:8080']
+CSRF_TRUSTED_ORIGINS = ['https://sonia.local']
 
 # Common
 INTERNAL_TIMESTAMP_FORMAT = '%Y%m%d_%H%M%S'
 UPLOADED_FILES_TIMESTAMP_FORMAT = '%Y%m%d_%H%M%S'  # changing this will stuff up upload filing.
-HUMAN_FRIENDLY_DATE_FORMAT = '%d-%b-%y'  # changing this will stuff up upload filing.
+HUMAN_FRIENDLY_DATE_FORMAT = '%d-%b-%y %H:%M:%S'
 USER_UPLOADS_ROOT = BASE_DIR / 'protected ' / 'uploadroot'
 # FileField.upload_to must return a relative path (within MEDIA_ROOT), not an absolute path.
 MEDIA_ROOT = USER_UPLOADS_ROOT
 
 SERVER_SIDE_RENDERING = True  # whether views prduce a json data structure, or a fully-rendered HTML
 
+EMPTY_VALUE_STRING="---"
 
 # Tasks
 WORK_DAY_HOURS = 8 # the number of hours in a business day of work

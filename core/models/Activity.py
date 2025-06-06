@@ -1,8 +1,9 @@
+import math
+import uuid
 from django.db import models
 from core.models.Item import Item
 from django.utils import timezone
 from django.conf import settings
-import math
 
 from accounts.models.User import User
 
@@ -24,6 +25,7 @@ class Activity(Item):
     completed = CompletedActivityManager()
     uncompleted = UnCompletedActivityManager()
 
+    uid = models.UUIDField(default=uuid.uuid4, unique=True)
     due_date = models.DateField(null=True, blank=True)
     is_completed = models.BooleanField(default=False)
 
@@ -45,14 +47,16 @@ class Activity(Item):
     start_date = models.DateField(null=True, blank=True, help_text="Scheduled or actual start date")
     completed_at = models.DateTimeField(null=True, blank=True, help_text="Timestamp when task was completed")
 
-    owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='owned_tasks', help_text="Primary owner of the task")
-    reviewer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='reviewed_tasks', help_text="Person reviewing this task")
+    owner = models.ForeignKey(User,  on_delete=models.SET_NULL, null=True, blank=True, related_name='owned_tasks', help_text="Primary owner of the task")
+    reviewer = models.ForeignKey(User,  on_delete=models.SET_NULL, null=True, blank=True, related_name='reviewed_tasks', help_text="Person reviewing this task")
 
     tags = models.CharField(max_length=255, blank=True, help_text="Comma-separated tags for this task")
     category = models.CharField(max_length=100, blank=True, help_text="Optional task category")
 
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='activities_created', help_text="User who created the task")
-    updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='activities_updated', help_text="User who last updated the task")
+    created_by = models.ForeignKey(User,  on_delete=models.SET_NULL, null=True, blank=True, related_name='activities_created', help_text="User who created the task",
+        db_constraint=False)
+    updated_by = models.ForeignKey(User,  on_delete=models.SET_NULL, null=True, blank=True, related_name='activities_updated', help_text="User who last updated the task",
+        db_constraint=False)
     change_log = models.TextField(blank=True, help_text="Optional log of task changes")
 
     estimated_start = models.DateField(null=True, blank=True, help_text="Estimated start date")

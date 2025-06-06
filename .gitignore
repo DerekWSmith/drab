@@ -1,1 +1,5 @@
 /.venv/
+/_internal_files/sonia.local.key
+/_internal_files/sonia.local.crt
+/_logs/nginx_error.log
+/_logs/nginx_access.log

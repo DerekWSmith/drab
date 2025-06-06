@@ -1,0 +1,47 @@
+{% extends "standard/threepanelayout.html" %}
+
+{% block sidebar %}
+  <p>test sidebar</p>
+{% endblock %}
+
+{% block upper %}
+Upper
+    <!-- Trigger button -->
+<button class="button" data-bs-toggle="offcanvas" data-bs-target="#bottomSheet">
+  Open Bottom Sheet
+</button>
+
+    <button class="button" data-bs-toggle="offcanvas" data-bs-target="#rightSheet">
+  Open Right Sheet
+</button>
+
+{% endblock %}
+
+{% block lower %}
+    Lower
+<!-- Offcanvas component -->
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="bottomSheet" aria-labelledby="bottomSheetLabel">
+  <div class="offcanvas-header">
+      <div class="header">Bottomo</div>
+    <button type="button" class="button" data-bs-dismiss="offcanvas" aria-label="Close">X</button>
+  </div>
+  <div class="offcanvas-body">
+      <div class="header" style="border: solid 2px black">
+    Content here...
+  </div>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-right" tabindex="-1" id="rightSheet" aria-labelledby="rightSheetLabel">
+  <div class="offcanvas-header">
+      <div class="header">Righto</div>
+    <button type="button" class="button" data-bs-dismiss="offcanvas" aria-label="Close">X</button>
+  </div>
+  <div class="offcanvas-body">
+      <div class="header" style="border: solid 2px black">
+    Content here...
+  </div>
+  </div>
+</div>
+
+{% endblock %}

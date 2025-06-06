@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.utils import timezone
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -7,6 +8,7 @@ import core.shared.Upload_to
 
 
 class ItemAttachment(models.Model):
+    uid = models.UUIDField(primary_key=True, default=uuid.uuid4)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, db_index=True)
     object_id = models.PositiveIntegerField(db_index=True)
     attached_to = GenericForeignKey('content_type', 'object_id')
@@ -16,7 +18,7 @@ class ItemAttachment(models.Model):
     is_original = models.BooleanField(default=False)
     version = models.PositiveIntegerField(default=1)
     uploaded_at = models.DateTimeField(auto_now_add=True)
-    uploaded_by = models.ForeignKey('accounts.User', on_delete=models.CASCADE)  # if needed
+    uploaded_by = models.ForeignKey('accounts.User',  on_delete=models.CASCADE)  # if needed
 
     class Meta:
         db_table = 'item_attachments'

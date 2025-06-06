@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extrahead %}
+
+    <!-- version 6.3 -->
+
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/tabulator_bootstrap5.css' %}">
+<!-- Tracking latest version
+<link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+
+And, theming:
+<link href="/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
+<link href="/dist/css/tabulator_simple.min.css" rel="stylesheet">
+-->
+
+
+{% endblock %}
+{% block headstyle %}
+{% endblock %}
+
+{% block buckets %}
+    <h1>buckets</h1>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <h3>Disponsible</h3>
+
+
+        <div id="decision-table" class="tabulator table-sm" style="height:90vh;"></div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const table = new Tabulator("#decision-table", {
+                    data: {{ table_data|safe }},
+                    layout: "fitColumns",
+                    rowFormatter: function (row) {
+                        row.getElement().setAttribute('data-uid', row.getData().uid);
+                    },
+                    columns: [
+                        {
+                            title: "Responsible",
+                            field: "responsible.preferred_name",
+                            width: "12vw",
+                            hozAlign: "left",
+                        },
+                        {
+                            title: "Summary",
+                            field: "summary",
+                            width: "66vw",
+                            hozAlign: "left",
+                        },
+                        {
+                            title: "Created Date",
+                            field: "created_at",
+                            width: "12vw",
+                            hozAlign: "right",
+                        },
+                        {
+                            title: "Adopted",
+                            field: "adopted_date",
+                            width: "10vw",
+                            hozAlign: "right",
+                        },
+                    ],
+
+                });
+
+                table.on("rowClick", (e, row) => {
+                        alert("BOO!") ;
+                        console.log("Row clicked", row.getData());
+                        const uid = row.getData().uid;
+                        window.location.href = `/decision/${uid}/edit/`;
+                        });
+
+                console.log("Tabulator initialized");
+                console.log(table); // or whatever variable holds it
+
+
+                const uid = new URLSearchParams(window.location.search).get('scroll_to');
+                if (uid) {
+                    const row = document.querySelector(`[data-uid="${uid}"]`);
+                    if (row) row.scrollIntoView({behavior: 'smooth', block: 'center'});
+                }
+            });
+
+        </script>
+
+        <!--
+
+            •	title: Column header label
+            •	field: Field name in data
+            •	width: Fixed width (px or %)
+            •	minWidth: Minimum column width
+            •	widthGrow: Proportional width expansion
+            •	hozAlign: Horizontal alignment (left, center, right)
+            •	vertAlign: Vertical alignment (top, middle, bottom)
+            •	resizable: Allow resizing (true/false)
+            •	frozen: Freeze column on scroll
+            •	headerSort: Enable sorting (true/false)
+            •	sorter: Custom sort function or string ("string", "number", etc.)
+            •	formatter: Custom cell display (built-ins like "link", "image", "tick")
+            •	editable: Allow editing (true, false, or function)
+            •	editor: Editor type ("input", "select", "textarea", custom)
+            •	cellClick: Callback on cell click
+            •	cellDblClick: On double-click
+            •	tooltip: Show tooltip (true, or string/function)
+            •	cssClass: Custom class name(s)
+            •	visible: Show/hide column (true/false)
+            •	download: Include in download (true/false)
+            •	formatterParams: Options for formatter
+            •	editorParams: Options for editor
+            •	titleFormatter: Custom formatter for column header
+            •	accessor: Function to transform raw data
+            •	mutator: Function to transform data before rendering
+
+
+        -->
+
+
+    </div>
+
+
+
+{% endblock %}
+
